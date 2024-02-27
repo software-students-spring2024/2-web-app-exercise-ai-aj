@@ -1,0 +1,48 @@
+<!-- HOME PAGE -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <title>Task Tracker App</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>HOME</h1>
+        </header>
+        <!-- MAIN -->
+        <main>
+            <!-- TASKS (WEEKLY) iterate -->
+            <h3> This Week's Tasks</h3>   <a href="tasks.html" class="button">Go to Page 2</a>
+                <div class="task-list">
+                <div class="task">
+                    <input type="checkbox" id="task1" class="task-checkbox">
+                    <label for="task1" class="task-label">Task 1</label>
+                    <label for = "task1" class="description">description</label>
+                    <label for = "task1" class="priority">priority</label>
+                </div>
+                <div class="task">
+                    <input type="checkbox" id="task1" class="task-checkbox">
+                    <label for="task1" class="task-label">Task 2</label>
+                    <label for = "task1" class="description">description</label>
+                    <label for = "task1" class="priority">priority</label>
+                </div>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="buttonContainer">
+                <a href="edittask.html" class="button">Go to Page 1</a>
+                <a href="addtask.html" class="button">Go to Page 2</a>
+            </div>
+
+            <!-- TASKS (PREVIOUS) -->
+            <h3>Last Week's Summary</h3>
+        </main>
+
+        <footer>
+        </footer>
+    </div>
+</body>
+</html>
