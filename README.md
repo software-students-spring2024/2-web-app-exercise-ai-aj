@@ -8,7 +8,8 @@ Our task planner empowers users to effortlessly manage tasks and deadlines, enha
 
 ## User stories
 
-- As a user, I want to have an account, so I can login from different phones and save tasks.
+- As a user, I want to have an account, so I can view and edit my tasks on wherever I am.
+- As a user, I want to be able to login, so I can access my account on any device.
 - As a user, I want to be able to restore my password, so I can restore it in case I forget it.
 - As a user, I want to be able to change my email, so I can change it if I need to.
 - As a user, I want to add tasks, so I can keep track of what I need to do.
@@ -21,4 +22,4 @@ Our task planner empowers users to effortlessly manage tasks and deadlines, enha
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+[Sprint 1 Task Board](https://github.com/orgs/software-students-spring2024/projects/25/views/1)https://github.com/orgs/software-students-spring2024/projects/25/views/1
