@@ -1,0 +1,31 @@
+<!-- ADD TASK PAGE -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Add Task</title>
+</head>
+
+<body>
+	
+	<div class="container">
+		
+		<h2>Submit Task</h2>
+		
+		<form action="/tasks" method="post">
+			
+			<input type="text" name="task_title" placeholder="Task Title" required><br>
+			<input type="text" name="task_description" placeholder="Task Description"><br>
+			<input type="number" name="task_priority" placeholder="Task Priority" required><br>
+			<input type="date" name="task_deadline" placeholder="Task Deadline" required><br>
+			
+			<div class="buttonContainer">
+
+				<button type="submit">Submit Task</button>
+			</div>
+		
+		</form>
+
+</body>
+</html>
