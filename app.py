@@ -52,12 +52,12 @@ def change_email():
 
 @app.route('/reset_password_request', methods=['GET'])
 def reset_password_request():
-    return render_template('reset_password.html')
+    return render_template('resetpassword.html')
 
 @app.route('/reset_password', methods=['POST', 'GET'])
 def reset_password():
     if request.method == 'GET':
-        return render_template('reset_password.html')
+        return render_template('resetpassword.html')
     elif request.method == 'POST':
         result = users.find_one_and_update(
             {'email': request.form['email']},
@@ -69,4 +69,4 @@ def reset_password():
             return 'Password reset failed'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
