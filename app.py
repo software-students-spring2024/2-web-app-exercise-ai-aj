@@ -1,6 +1,7 @@
 import os
 import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash
+import hashlib
 
 import pymongo
 
@@ -20,7 +21,11 @@ def index():
 def login():
     user = users.find_one({'email': request.form['email']})
 
-    if user and user['password'] == request.form['password']:
+    # Hash the input password to compare
+    input_password = request.form['password'].encode('utf-8')
+    hashed_input_password = hashlib.sha256(input_password).hexdigest()
+
+    if user and user['password'] == hashed_input_password:
         return 'Logged in successfully'
     else:
         flash('Invalid email/password combination')
@@ -34,7 +39,11 @@ def register():
         existing_user = users.find_one({'email': request.form['email']})
 
         if existing_user is None:
-            users.insert_one({'name': request.form['username'], 'email': request.form['email'], 'password': request.form['password']})
+            # Hash the password before storing it
+            password = request.form['password'].encode('utf-8')
+            hashed_password = hashlib.sha256(password).hexdigest()
+
+            users.insert_one({'name': request.form['username'], 'email': request.form['email'], 'password': hashed_password})
             return redirect(url_for('index'))
         else:
             return 'That email already exists!'
@@ -59,9 +68,13 @@ def reset_password():
     if request.method == 'GET':
         return render_template('resetpassword.html')
     elif request.method == 'POST':
+        # Hash the new password before storing it
+        new_password = request.form['new_password'].encode('utf-8')
+        hashed_new_password = hashlib.sha256(new_password).hexdigest()
+
         result = users.find_one_and_update(
             {'email': request.form['email']},
-            {'$set': {'password': request.form['new_password']}}
+            {'$set': {'password': hashed_new_password}}
         )
         if result:
             return 'Password updated successfully'
@@ -70,3 +83,5 @@ def reset_password():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
+
+    # set password to helloworld1
