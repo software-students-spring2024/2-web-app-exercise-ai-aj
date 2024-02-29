@@ -126,6 +126,5 @@ def view_tasks():
     user_tasks = tasks.find({'user_id': ObjectId(session['user_id'])})
     return render_template('tasks.html', tasks=list(user_tasks))
 
-
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
