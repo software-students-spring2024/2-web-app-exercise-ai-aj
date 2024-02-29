@@ -10,34 +10,60 @@
 	<div class="container">
 
 		<header>
+			<div class="hamburger-menu">
+                <div class="menu-icon" onclick="toggleMenu()">
+                    &#9776;
+                </div>
+                <div class="menu-content" id="menuContent" style="display: none;">
+                    <a href="/">Home</a>
+                    <a href="/tasks">Tasks</a>
+                    <a href="/summary">Summary</a>
+                    <a href="/account">Account</a>
+                </div>
+            </div>
 			
 			<h2>TASKS</h2>
 	
 		</header>
-
-		<div class="task-list">
-
-			<div class="task">
-
-				<input type="checkbox" id="taskA" class="task-checkbox">
-				<label for="taskA" class="task-label">Task A</label>
-				<label for="taskA" class="description">Description</label>
-				<label for="taskA" class="priority">Priority</label>
-
+		<!-- Column Headers-->
+		<div style="display: table; width: 100%;">
+			<div style="display: table-row; font-weight: bold;">
+				<div style="display: table-cell; padding: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;Task</div>
+				<div style="display: table-cell; padding: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description</div>
+				<div style="display: table-cell; padding: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Priority</div>
 			</div>
-
-			<div class="task">
-
-				<input type="checkbox" id="taskB" class="task-checkbox">
-				<label for="taskB" class="task-label">Task B</label>
-				<label for="taskB" class="description">Description</label>
-				<label for="taskB" class="priority">Priority</label>
-
-			</div>
-
 		</div>
+
+		<!-- Task List -->
+		<div style="display: table; width: 100%;">
+			{% for task in tasks %}
+			<div style="display: table-row;">
+				<div style="display: table-cell; padding: 8px;">
+					<div style="display: flex; align-items: center;">
+                    <input type="checkbox" id="task{{ loop.index }}" class="task-checkbox" style="margin-right: 5px;">
+                    <label for="task{{ loop.index }}">{{ task.title }}</label>
+                </div>
+			</div>
+			<div style="display: table-cell; padding: 8px;">{{ task.description }}</div>
+			<div style="display: table-cell; padding: 8px;">Priority: {{ task.priority }}</div>
+		</div>
+		{% else %}
+		<p>No tasks found.</p>
+		{% endfor %}
+	</div>
 	
 	</div>
+	<script>
+	function toggleMenu() {
+		var menuContent = document.getElementById("menuContent");
+		if (menuContent.style.display === "none") {
+			menuContent.style.display = "block";
+		}
+		else {
+				menuContent.style.display = "none";
+		}
+	}
+	</script>
 
 </body>
 </html>
