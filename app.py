@@ -37,7 +37,7 @@ def login():
         flash('Invalid email/password combination')
         return redirect(url_for('index'))
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET','POST'])
 def logout():
     session.pop('user_id', None)  # Remove user_id from session
     return redirect(url_for('index'))
