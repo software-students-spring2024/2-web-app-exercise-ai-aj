@@ -1,35 +1,46 @@
 import os
-import datetime
-from flask import Flask, render_template, request, redirect, url_for, flash
-import hashlib
-
+from datetime import datetime
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask_bcrypt import Bcrypt
 import pymongo
+from bson.objectid import ObjectId
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = os.getenv('SECRET_KEY')
 
-# Setup MongoDB connection
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-db = client["userDB"]
+# Setup MongoDB connection using environment variables
+client = pymongo.MongoClient(os.getenv('MONGO_URI'))
+db = client.get_default_database()  # Automatically get the database specified in the URI
 users = db["users"]
+tasks = db["tasks"]
+
+bcrypt = Bcrypt(app)
 
 @app.route('/')
 def index():
+    if 'user_id' in session:
+        user_tasks = tasks.find({'user_id': ObjectId(session['user_id'])})
+        return render_template('index.html', tasks=list(user_tasks))
     return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
 def login():
     user = users.find_one({'email': request.form['email']})
-
-    # Hash the input password to compare
-    input_password = request.form['password'].encode('utf-8')
-    hashed_input_password = hashlib.sha256(input_password).hexdigest()
-
-    if user and user['password'] == hashed_input_password:
-        return 'Logged in successfully'
+    if user and bcrypt.check_password_hash(user['password'], request.form['password']):
+        session['user_id'] = str(user['_id'])  # Store user ID in session
+        return redirect(url_for('index'))
     else:
         flash('Invalid email/password combination')
         return redirect(url_for('index'))
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)  # Remove user_id from session
+    return redirect(url_for('index'))
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -38,50 +49,74 @@ def register():
     elif request.method == 'POST':
         existing_user = users.find_one({'email': request.form['email']})
 
-        if existing_user is None:
-            # Hash the password before storing it
-            password = request.form['password'].encode('utf-8')
-            hashed_password = hashlib.sha256(password).hexdigest()
-
+        if not existing_user:
+            hashed_password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
             users.insert_one({'name': request.form['username'], 'email': request.form['email'], 'password': hashed_password})
             return redirect(url_for('index'))
         else:
-            return 'That email already exists!'
+            flash('That email already exists!')
+            return redirect(url_for('register'))
 
-@app.route('/change_email', methods=['POST'])
-def change_email():
-    result = users.find_one_and_update(
-        {'email': request.form['old_email']},
-        {'$set': {'email': request.form['new_email']}}
-    )
-    if result:
-        return 'Email updated successfully'
-    else:
-        return 'Email update failed'
+@app.route('/add_task', methods=['POST', 'GET'])
+def add_task():
+    if request.method == 'GET':
+        return render_template('addtask.html')
+    elif request.method == 'POST':
+        new_task = {
+            "title": request.form['title'],
+            "description": request.form.get('description', ''),
+            "priority": int(request.form.get('priority', 1)),
+            "deadline": datetime.strptime(request.form['deadline'], '%Y-%m-%d') if 'deadline' in request.form else None,
+            "status": 'pending',
+            "user_id": ObjectId(session['user_id'])
+        }
+        tasks.insert_one(new_task)
+        flash('Task added successfully')
+        return redirect(url_for('index'))
 
-@app.route('/reset_password_request', methods=['GET'])
-def reset_password_request():
-    return render_template('resetpassword.html')
+@app.route('/edit_task/<task_id>', methods=['GET', 'POST'])
+def edit_task(task_id):
+    task_to_edit = tasks.find_one({"_id": ObjectId(task_id)})
+    if request.method == 'GET':
+        # Pass task details to template, converting deadline to string if it exists
+        return render_template('edittask.html', task=task_to_edit, task_id=task_id)
+    elif request.method == 'POST':
+        updates = {
+            "title": request.form['title'],
+            "description": request.form.get('description', ''),
+            "priority": int(request.form.get('priority', 1)),
+            "status": request.form.get('status', 'pending'),
+        }
+        # Handle deadline separately to convert from string to datetime
+        if 'deadline' in request.form and request.form['deadline']:
+            updates["deadline"] = datetime.strptime(request.form['deadline'], '%Y-%m-%d')
+        tasks.update_one({"_id": ObjectId(task_id)}, {"$set": updates})
+        flash('Task updated successfully')
+        return redirect(url_for('index'))
+
+
+
+@app.route('/delete_task/<task_id>', methods=['POST'])
+def delete_task(task_id):
+    tasks.delete_one({"_id": ObjectId(task_id)})
+    flash('Task deleted successfully')
+    return redirect(url_for('index'))
 
 @app.route('/reset_password', methods=['POST', 'GET'])
 def reset_password():
     if request.method == 'GET':
         return render_template('resetpassword.html')
     elif request.method == 'POST':
-        # Hash the new password before storing it
-        new_password = request.form['new_password'].encode('utf-8')
-        hashed_new_password = hashlib.sha256(new_password).hexdigest()
-
+        hashed_new_password = bcrypt.generate_password_hash(request.form['new_password']).decode('utf-8')
         result = users.find_one_and_update(
             {'email': request.form['email']},
             {'$set': {'password': hashed_new_password}}
         )
         if result:
-            return 'Password updated successfully'
+            flash('Password updated successfully')
         else:
-            return 'Password reset failed'
+            flash('Password reset failed')
+        return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
-
-    # set password to helloworld1
