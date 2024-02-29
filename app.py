@@ -67,12 +67,22 @@ def add_task():
             "description": request.form.get('description', ''),
             "priority": int(request.form.get('priority', 1)),
             "deadline": datetime.strptime(request.form['deadline'], '%Y-%m-%d') if 'deadline' in request.form else None,
-            "status": 'pending',
+            "status": request.form.get('status', 'pending'),
+            "completed": False,  # Set completed to False for new tasks
             "user_id": ObjectId(session['user_id'])
         }
         tasks.insert_one(new_task)
         flash('Task added successfully')
         return redirect(url_for('index'))
+
+#marking task as completed
+@app.route('/complete_task/<task_id>', methods=['POST'])
+def complete_task(task_id):
+    task = tasks.find_one({"_id": ObjectId(task_id)})
+    new_status = not task.get('completed', False)
+    tasks.update_one({"_id": ObjectId(task_id)}, {"$set": {"completed": new_status}})
+    return redirect(url_for('view_tasks'))
+
 
 @app.route('/edit_task/<task_id>', methods=['GET', 'POST'])
 def edit_task(task_id):
