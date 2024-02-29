@@ -117,6 +117,15 @@ def reset_password():
         else:
             flash('Password reset failed')
         return redirect(url_for('index'))
+    
+@app.route('/tasks')
+def view_tasks():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    user_tasks = tasks.find({'user_id': ObjectId(session['user_id'])})
+    return render_template('tasks.html', tasks=list(user_tasks))
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
