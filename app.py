@@ -16,7 +16,7 @@ app.secret_key = os.getenv('SECRET_KEY')
 client = pymongo.MongoClient(os.getenv('MONGO_URI'))
 db = client.get_default_database()  # Automatically get the database specified in the URI
 users = db["users"]
-tasks = db["tasks"]  # Assuming you have a 'tasks' collection
+tasks = db["tasks"]
 
 bcrypt = Bcrypt(app)
 
