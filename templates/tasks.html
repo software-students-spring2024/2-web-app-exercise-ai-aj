@@ -1,16 +1,15 @@
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-	<title>Task List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>Task List</title>
 </head>
 
 <body>
-	<div class="container">
-
-		<header>
-			<div class="hamburger-menu">
+    <div class="container">
+        <header>
+            <div class="hamburger-menu">
                 <div class="menu-icon" onclick="toggleMenu()">
                     &#9776;
                 </div>
@@ -21,49 +20,48 @@
                     <a href="/account">Account</a>
                 </div>
             </div>
-			
-			<h2>TASKS</h2>
-	
-		</header>
-		<!-- Column Headers-->
-		<div style="display: table; width: 100%;">
-			<div style="display: table-row; font-weight: bold;">
-				<div style="display: table-cell; padding: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;Task</div>
-				<div style="display: table-cell; padding: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description</div>
-				<div style="display: table-cell; padding: 8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Priority</div>
-			</div>
-		</div>
+            <h2>TASKS</h2>
+        </header>
+        <!-- Column Headers-->
+        <div style="display: table; width: 100%;">
+            <div style="display: table-row; font-weight: bold;">
+                <div style="display: table-cell; padding: 8px;">Task</div>
+                <div style="display: table-cell; padding: 8px;">Description</div>
+                <div style="display: table-cell; padding: 8px;">Priority</div>
+                <div style="display: table-cell; padding: 8px;">Completed</div>
+            </div>
+        </div>
 
-		<!-- Task List -->
-		<div style="display: table; width: 100%;">
-			{% for task in tasks %}
-			<div style="display: table-row;">
-				<div style="display: table-cell; padding: 8px;">
-					<div style="display: flex; align-items: center;">
-                    <input type="checkbox" id="task{{ loop.index }}" class="task-checkbox" style="margin-right: 5px;">
+        <!-- Task List -->
+        <div style="display: table; width: 100%;">
+            {% for task in tasks %}
+            <div style="display: table-row;">
+                <div style="display: table-cell; padding: 8px;">
                     <label for="task{{ loop.index }}">{{ task.title }}</label>
                 </div>
-			</div>
-			<div style="display: table-cell; padding: 8px;">{{ task.description }}</div>
-			<div style="display: table-cell; padding: 8px;">Priority: {{ task.priority }}</div>
-		</div>
-		{% else %}
-		<p>No tasks found.</p>
-		{% endfor %}
-	</div>
-	
-	</div>
-	<script>
-	function toggleMenu() {
-		var menuContent = document.getElementById("menuContent");
-		if (menuContent.style.display === "none") {
-			menuContent.style.display = "block";
-		}
-		else {
-				menuContent.style.display = "none";
-		}
-	}
-	</script>
-
+                <div style="display: table-cell; padding: 8px;">{{ task.description }}</div>
+                <div style="display: table-cell; padding: 8px;">Priority: {{ task.priority }}</div>
+                <div style="display: table-cell; padding: 8px;">
+                    <!-- Form to toggle completion status -->
+                    <form action="/complete_task/{{ task._id }}" method="post" style="display: inline;">
+                        <input type="checkbox" name="completed" onchange="this.form.submit()" {{ 'checked' if task.completed }}>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <p>No tasks found.</p>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+    function toggleMenu() {
+        var menuContent = document.getElementById("menuContent");
+        if (menuContent.style.display === "none") {
+            menuContent.style.display = "block";
+        } else {
+            menuContent.style.display = "none";
+        }
+    }
+    </script>
 </body>
 </html>
