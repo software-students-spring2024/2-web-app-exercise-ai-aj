@@ -152,6 +152,48 @@ def update_task_status():
     tasks.update_one({'_id': ObjectId(task_id)}, {'$set': {'completed': completed_status}})
     return redirect(url_for('index'))
 
+@app.route('/account')
+def account():
+    if 'user_id' in session:
+        user = users.find_one({'_id': ObjectId(session['user_id'])})
+        if user:
+            # Use the email from the session if available, otherwise use the one from the database
+            email = session.get('email', user['email'])
+            return render_template('account.html', username=user['name'], email=email)
+        else:
+            flash('User not found.')
+            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/change_email')
+def change_email_page():
+    if 'user_id' in session:
+        return render_template('changeemail.html')
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/change_email', methods=['POST'])
+def change_email():
+    username = request.form.get('username')
+    old_email = request.form.get('old_email')
+    password = request.form.get('password')
+    new_email = request.form.get('new_email')
+    
+    # Fetch user from the database
+    user = users.find_one({'username': username, 'email': old_email})
+    # Verify password and update email if correct
+    if user and bcrypt.check_password_hash(user['password'], password):
+        # Update the database with the new email
+        users.update_one({'_id': user['_id']}, {'$set': {'email': new_email}})
+        # Update the email in session
+        session['email'] = new_email
+        flash('Email address updated successfully.')
+        return redirect(url_for('account'))
+    else:
+        flash('Invalid credentials.')
+        return redirect(url_for('account'))
+    
 
 
 if __name__ == '__main__':
