@@ -175,24 +175,30 @@ def change_email_page():
 
 @app.route('/change_email', methods=['POST'])
 def change_email():
-    username = request.form.get('username')
     old_email = request.form.get('old_email')
     password = request.form.get('password')
     new_email = request.form.get('new_email')
     
-    # Fetch user from the database
-    user = users.find_one({'username': username, 'email': old_email})
+    # Fetch user from the database by old email
+    user = users.find_one({'email': old_email})
+    
     # Verify password and update email if correct
     if user and bcrypt.check_password_hash(user['password'], password):
+        # Check if new email already exists in the database
+        existing_user = users.find_one({'email': new_email})
+        if existing_user:
+            flash('This email is already in use.')
+            return redirect(url_for('change_email_page'))
+        
         # Update the database with the new email
         users.update_one({'_id': user['_id']}, {'$set': {'email': new_email}})
-        # Update the email in session
-        session['email'] = new_email
+        
         flash('Email address updated successfully.')
         return redirect(url_for('account'))
     else:
         flash('Invalid credentials.')
-        return redirect(url_for('account'))
+        return redirect(url_for('change_email_page'))
+
     
 
 
