@@ -32,10 +32,12 @@
             <div class="task-list">
                 {% for task in tasks %}
                 <div class="task">
-                    <input type="checkbox" id="task{{ loop.index }}" class="task-checkbox">
-                    <label for="task{{ loop.index }}" class="task-label">{{ task.title }}</label>
-                    <label for="task{{ loop.index }}" class="description">{{ task.description }}</label>
-                    <label for="task{{ loop.index }}" class="priority">Priority: {{ task.priority }}</label>
+                    <form action="/complete_task/{{ task._id }}" method="post">
+                        <input type="checkbox" id="task{{ loop.index }}" name="completed" onchange="this.form.submit()" {{ 'checked' if task.completed }}>
+                        <label for="task{{ loop.index }}" class="task-label">{{ task.title }}</label>
+                        <label for="task{{ loop.index }}" class="description">{{ task.description }}</label>
+                        <label for="task{{ loop.index }}" class="priority">Priority: {{ task.priority }}</label>
+                    </form>
                 </div>
                 {% else %}
                 <p>No tasks found</p>

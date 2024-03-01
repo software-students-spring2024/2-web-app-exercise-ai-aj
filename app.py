@@ -81,7 +81,7 @@ def complete_task(task_id):
     task = tasks.find_one({"_id": ObjectId(task_id)})
     new_status = not task.get('completed', False)
     tasks.update_one({"_id": ObjectId(task_id)}, {"$set": {"completed": new_status}})
-    return redirect(url_for('view_tasks'))
+    return redirect(request.referrer or url_for('index'))
 
 
 @app.route('/edit_task/<task_id>', methods=['GET', 'POST'])
@@ -103,8 +103,6 @@ def edit_task(task_id):
         tasks.update_one({"_id": ObjectId(task_id)}, {"$set": updates})
         flash('Task updated successfully')
         return redirect(url_for('index'))
-
-
 
 @app.route('/delete_task/<task_id>', methods=['POST'])
 def delete_task(task_id):
@@ -135,6 +133,26 @@ def view_tasks():
     
     user_tasks = tasks.find({'user_id': ObjectId(session['user_id'])})
     return render_template('tasks.html', tasks=list(user_tasks))
+
+@app.route('/summary')
+def summary():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    now = datetime.now()
+    past_due_completed = tasks.find({'user_id': ObjectId(session['user_id']), 'deadline': {'$lt': now}, 'completed': True})
+    past_due_incomplete = tasks.find({'user_id': ObjectId(session['user_id']), 'deadline': {'$lt': now}, 'completed': False})
+
+    return render_template('summary.html', past_due_completed=list(past_due_completed), past_due_incomplete=list(past_due_incomplete))
+
+@app.route('/update_task_status', methods=['POST'])
+def update_task_status():
+    task_id = request.form['task_id']
+    completed_status = 'completed' in request.form
+    tasks.update_one({'_id': ObjectId(task_id)}, {'$set': {'completed': completed_status}})
+    return redirect(url_for('index'))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
