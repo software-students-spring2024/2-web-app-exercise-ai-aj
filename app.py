@@ -112,6 +112,7 @@ def delete_task(task_id):
 
 @app.route('/reset_password', methods=['POST', 'GET'])
 def reset_password():
+    print("Reset password route accessed")  # Debug print statement
     if request.method == 'GET':
         return render_template('resetpassword.html')
     elif request.method == 'POST':
@@ -181,7 +182,7 @@ def change_email():
     new_email = request.form.get('new_email')
     
     # Fetch user from the database
-    user = users.find_one({'username': username, 'email': old_email})
+    user = users.find_one({'user_id': username, 'email': old_email})
     # Verify password and update email if correct
     if user and bcrypt.check_password_hash(user['password'], password):
         # Update the database with the new email
