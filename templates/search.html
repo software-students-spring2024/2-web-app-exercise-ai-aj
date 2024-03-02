@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/styles.css">
-    <title>Task List</title>
+    <title>Search</title>
 </head>
 
 <body>
@@ -21,8 +21,19 @@
                     <a href="/search">Search</a>
                 </div>
             </div>
-            <h2>TASKS</h2>
+            <h2>Search</h2>
         </header>
+
+        <!-- Search bar-->
+        <div class="search-button">
+            <h2>Search for Task</h2>
+            <form action="/search" method="post"> 
+                <input type="text" name="searchTitle" placeholder="Search by Task Title" required><br>
+                    <button type="submit">Search Task</button>
+                </div>
+            </form>
+        </div>
+
         <!-- Column Headers-->
         <div style="display: table; width: 100%;">
             <div style="display: table-row; font-weight: bold;">
@@ -33,10 +44,10 @@
             </div>
         </div>
 
-        <!-- Task List -->
+        <!-- Task Search Result -->
         <div class="taskTable">
             <div style="display: table; width: 100%;">
-                {% for task in tasks %}
+                {% for task in tasksWithTitle %}
                 <div style="display: table-row;">
                     <div style="display: table-cell; padding: 8px;">
                         <label for="task{{ loop.index }}">{{ task.title }}</label>

@@ -32,6 +32,16 @@ header {
     border-radius: 5px;
 }
 
+.search-button {
+
+    font-family: typewriter;
+    color: #fff;
+    text-decoration: none;
+    border: 1px sold #fee;
+    padding: 5px 10px;
+    border-radius: 5px;
+
+}
 
 .logout-button {
     font-family: typewriter;
