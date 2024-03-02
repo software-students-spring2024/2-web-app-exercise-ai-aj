@@ -1,0 +1,164 @@
+@font-face {
+    font-family: 'typewriter';
+    src: url('fonts/typewriter.ttf') format('truetype');
+}
+
+
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: typewriter;
+    line-height: 1.6;
+    /* background-color: #f4f4f4; */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    font-family: typewriter;
+    background-color: #476DAB;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+
+
+.logout-button {
+    font-family: typewriter;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.logout-button:hover {
+    background-color: #476DAB;
+    color: #fff;
+}
+
+main {
+    margin-top: 20px;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #CCDDE2;
+    padding: 10px;
+}
+
+.task {
+    margin-bottom: 10px;
+}
+
+.task-label {
+    font-family: typewriter;
+    font-weight: bold;
+}
+
+.description{
+    margin-left: 20px;
+    color: #476DAB;
+    text-transform: lowercase;
+}
+.priority {
+    margin-left: 50px;
+    color: #476DAB;
+    text-transform: uppercase;
+    align-items: flex-end;
+    justify-content: flex-end;
+    text-align: end;
+}
+
+.buttonContainer {
+    margin-top: 20px;
+}
+
+.button {
+    background-color: #476DAB;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.button:hover {
+    background-color: #CCDDE2;
+}
+
+
+.hamburger-menu {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; 
+}
+
+
+.menu-icon {
+    cursor: pointer;
+    font-size: 20px;
+    
+}
+
+.menu-content {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    background-color: #476DAB;
+    /* border: 1px solid #555; */
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.menu-content.menu-visible {
+    display: block;
+}
+
+.menu-content a {
+    padding: 10px;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+}
+
+.menu-content a:hover {
+    background-color: #476DAB;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hamburger-menu {
+        margin-bottom: 10px;
+    }
+
+    .menu-content {
+        top: 50px;
+        right: 0;
+        width: 100%;
+    }
+
+    .menu-content a {
+        margin: 0;
+    }
+}
+
+.taskTable{
+    border: solid 1px #CCDDE2
+}
