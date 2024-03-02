@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="../static/css/styles.css">
     <title>Task List</title>
 </head>
 
@@ -33,25 +33,27 @@
         </div>
 
         <!-- Task List -->
-        <div style="display: table; width: 100%;">
-            {% for task in tasks %}
-            <div style="display: table-row;">
-                <div style="display: table-cell; padding: 8px;">
-                    <label for="task{{ loop.index }}">{{ task.title }}</label>
+        <div class="taskTable">
+            <div style="display: table; width: 100%;">
+                {% for task in tasks %}
+                <div style="display: table-row;">
+                    <div style="display: table-cell; padding: 8px;">
+                        <label for="task{{ loop.index }}">{{ task.title }}</label>
+                    </div>
+                    <div style="display: table-cell; padding: 8px;">{{ task.description }}</div>
+                    <div style="display: table-cell; padding: 8px;">Priority: {{ task.priority }}</div>
+                    <div style="display: table-cell; padding: 8px;">
+                        <!-- Form to toggle completion status -->
+                        <form action="/complete_task/{{ task._id }}" method="post" style="display: inline;">
+                            <input type="checkbox" name="completed" onchange="this.form.submit()" {{ 'checked' if task.completed }}>
+                        </form>
+                    </div>
                 </div>
-                <div style="display: table-cell; padding: 8px;">{{ task.description }}</div>
-                <div style="display: table-cell; padding: 8px;">Priority: {{ task.priority }}</div>
-                <div style="display: table-cell; padding: 8px;">
-                    <!-- Form to toggle completion status -->
-                    <form action="/complete_task/{{ task._id }}" method="post" style="display: inline;">
-                        <input type="checkbox" name="completed" onchange="this.form.submit()" {{ 'checked' if task.completed }}>
-                    </form>
-                </div>
+                {% else %}
+                <p>No tasks found.</p>
+                {% endfor %}
             </div>
-            {% else %}
-            <p>No tasks found.</p>
-            {% endfor %}
-        </div>
+    </div>
     </div>
     <script>
     function toggleMenu() {
