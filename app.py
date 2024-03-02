@@ -112,7 +112,6 @@ def delete_task(task_id):
 
 @app.route('/reset_password', methods=['POST', 'GET'])
 def reset_password():
-    print("Reset password route accessed")  # Debug print statement
     if request.method == 'GET':
         return render_template('resetpassword.html')
     elif request.method == 'POST':
@@ -146,6 +145,19 @@ def summary():
 
     return render_template('summary.html', past_due_completed=list(past_due_completed), past_due_incomplete=list(past_due_incomplete))
 
+@app.route('/search')
+def search(searchTitle):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    if request.method == 'GET':
+        render_template('search.html')
+    elif request.method =='POST':
+        tasksWithTitle = tasks.find({"title": request.form('searchTitle'), "user_id": ObjectId(session['user_id'])})
+
+    return render_template('search.html', tasksWithTitle=list(tasksWithTitle))
+        
+
 @app.route('/update_task_status', methods=['POST'])
 def update_task_status():
     task_id = request.form['task_id']
@@ -176,24 +188,30 @@ def change_email_page():
 
 @app.route('/change_email', methods=['POST'])
 def change_email():
-    username = request.form.get('username')
     old_email = request.form.get('old_email')
     password = request.form.get('password')
     new_email = request.form.get('new_email')
     
-    # Fetch user from the database
-    user = users.find_one({'user_id': username, 'email': old_email})
+    # Fetch user from the database by old email
+    user = users.find_one({'email': old_email})
+    
     # Verify password and update email if correct
     if user and bcrypt.check_password_hash(user['password'], password):
+        # Check if new email already exists in the database
+        existing_user = users.find_one({'email': new_email})
+        if existing_user:
+            flash('This email is already in use.')
+            return redirect(url_for('change_email_page'))
+        
         # Update the database with the new email
         users.update_one({'_id': user['_id']}, {'$set': {'email': new_email}})
-        # Update the email in session
-        session['email'] = new_email
+        
         flash('Email address updated successfully.')
         return redirect(url_for('account'))
     else:
         flash('Invalid credentials.')
-        return redirect(url_for('account'))
+        return redirect(url_for('change_email_page'))
+
     
 
 
