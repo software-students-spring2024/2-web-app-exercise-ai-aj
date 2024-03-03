@@ -146,7 +146,7 @@ def summary():
     return render_template('summary.html', past_due_completed=list(past_due_completed), past_due_incomplete=list(past_due_incomplete))
 
 @app.route('/search')
-def search(searchTitle):
+def search():
     if 'user_id' not in session:
         return redirect(url_for('login'))
     
