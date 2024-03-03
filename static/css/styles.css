@@ -92,17 +92,19 @@ main {
     margin-top: 20px;
 }
 
-.button {
+.button, .button:visited {
     background-color: #476DAB;
     color: #fff;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
     display: inline-block;
+    margin-top: 20px; /* You can adjust this as needed for spacing */
 }
 
 .button:hover {
     background-color: #CCDDE2;
+    color: white;
 }
 
 
@@ -203,6 +205,26 @@ main {
     border-radius: 5px;
     cursor: pointer;
     font-family: typewriter;
+}
+
+.backHomeButton {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #476DAB;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'typewriter', monospace;
+    text-align: center;
+    text-decoration: none; 
+    transition: background-color 0.3s;
+}
+
+.backHomeButton:hover {
+    background-color: #567DAB;
 }
 
 /* Responsive styles */

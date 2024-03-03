@@ -17,10 +17,6 @@
             <input type="number" name="priority" placeholder="Task Priority" value="{{ task.get('priority', 1) }}" required><br>
             <!-- Format the date for the input field of type date -->
             <input type="date" name="deadline" placeholder="Task Deadline" value="{{ task['deadline'].strftime('%Y-%m-%d') }}" required><br>
-            <select name="status">
-                <option value="pending" {% if task.get('status') == 'pending' %} selected {% endif %}>Pending</option>
-                <option value="completed" {% if task.get('status') == 'completed' %} selected {% endif %}>Completed</option>
-            </select><br>
             <div class="buttonContainer">
                 <button type="submit">Submit Changes</button>
             </div>

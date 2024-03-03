@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,61 +25,66 @@
             <h2>TASKS</h2>
         </header>
 
-<!-- Form for deleting multiple tasks -->
-<form action="/delete_tasks" method="POST">
-   <!-- Task Table with Headers -->
-<div class="taskTableHeader">
-    <div class="taskRow">
-        <div class="taskCell headerCell">Select</div>
-        <div class="taskCell headerCell">Task</div>
-        <div class="taskCell headerCell">Description</div>
-        <div class="taskCell headerCell">Priority</div>
-        <div class="taskCell headerCell">Deadline</div>
-        <div class="taskCell headerCell">Completed</div>
-        <div class="taskCell headerCell">Edit</div>
-    </div>
-</div>
+        <!-- Form for deleting multiple tasks -->
+        <form action="/delete_tasks" method="POST">
+            <!-- Task Table with Headers -->
+            <div class="taskTableHeader">
+                <div class="taskRow">
+                    <div class="taskCell headerCell">Select</div>
+                    <div class="taskCell headerCell">Task</div>
+                    <div class="taskCell headerCell">Description</div>
+                    <div class="taskCell headerCell">Priority</div>
+                    <div class="taskCell headerCell">Deadline</div>
+                    <div class="taskCell headerCell">Completed</div>
+                    <div class="taskCell headerCell">Edit</div>
+                </div>
+            </div>
 
-<!-- Task List -->
-<div class="taskTable">
-    {% for task in tasks %}
-    <div class="taskRow">
-        <div class="taskCell">
-            <input type="checkbox" name="task_ids" value="{{ task._id }}">
-        </div>
-        <div class="taskCell">{{ task.title }}</div>
-        <div class="taskCell">{{ task.description }}</div>
-        <div class="taskCell">{{ task.priority }}</div>
-        <div class="taskCell">{{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'N/A' }}</div>
-        <div class="taskCell">
-            <input type="checkbox" onclick="return false;" {{ 'checked' if task.completed }}>
-        </div>
-        <div class="taskCell">
-            <a href="/edit_task/{{ task._id }}">Edit</a>
-        </div>
-    </div>
-    {% else %}
-    <div class="taskRow">
-        <div class="taskCell" colspan="7">No tasks found.</div>
-    </div>
-    {% endfor %}
-</div>
+            <!-- Task List -->
+            <div class="taskTable">
+                {% for task in tasks %}
+                <div class="taskRow">
+                    <div class="taskCell">
+                        <input type="checkbox" name="task_ids" value="{{ task._id }}">
+                    </div>
+                    <div class="taskCell">{{ task.title }}</div>
+                    <div class="taskCell">{{ task.description }}</div>
+                    <div class="taskCell">{{ task.priority }}</div>
+                    <div class="taskCell">{{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'N/A' }}</div>
+                    <div class="taskCell">
+                        <input type="checkbox" onclick="return false;" {{ 'checked' if task.completed }}>
+                    </div>
+                    <div class="taskCell">
+                        <a href="/edit_task/{{ task._id }}">Edit</a>
+                    </div>
+                </div>
+                {% else %}
+                <div class="taskRow">
+                    <div class="taskCell" colspan="7">No tasks found.</div>
+                </div>
+                {% endfor %}
+            </div>
 
-<button type="submit" class="deleteSelectedButton">Delete Selected</button>
-
-</form>
+            <button type="submit" class="deleteSelectedButton">Delete Selected</button>
+            <div class="buttonContainer">
+                <a href="/" class="backHomeButton">Back to Home</a>
+            </div>
+        </form>
     </div>
-    
+
     <script>
-    function toggleMenu() {
-        var menuContent = document.getElementById("menuContent");
-        if (menuContent.style.display === "none") {
-            menuContent.style.display = "block";
-        } else {
-            menuContent.style.display = "none";
+        function toggleMenu() {
+            var menuContent = document.getElementById("menuContent");
+            if (menuContent.style.display === "none") {
+                menuContent.style.display = "block";
+            } else {
+                menuContent.style.display = "none";
+            }
         }
-    }
     </script>
-    <a href="/">Back to Home</a>
+
+
+
 </body>
+
 </html>
