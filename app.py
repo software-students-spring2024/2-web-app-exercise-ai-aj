@@ -104,11 +104,17 @@ def edit_task(task_id):
         flash('Task updated successfully')
         return redirect(url_for('index'))
 
-@app.route('/delete_task/<task_id>', methods=['POST'])
-def delete_task(task_id):
-    tasks.delete_one({"_id": ObjectId(task_id)})
-    flash('Task deleted successfully')
-    return redirect(url_for('index'))
+@app.route('/delete_tasks', methods=['POST'])
+def delete_tasks():
+    # Retrieve list of task IDs marked for deletion
+    task_ids = request.form.getlist('task_ids')
+    for task_id in task_ids:
+        # Convert string ID to ObjectId and delete the task
+        tasks.delete_one({"_id": ObjectId(task_id)})
+    flash(f'Tasks deleted successfully.')
+    # Redirect back to the tasks page
+    return redirect(url_for('view_tasks'))
+
 
 @app.route('/reset_password', methods=['POST', 'GET'])
 def reset_password():
@@ -145,6 +151,7 @@ def summary():
 
     return render_template('summary.html', past_due_completed=list(past_due_completed), past_due_incomplete=list(past_due_incomplete))
 
+<<<<<<< HEAD
 @app.route('/search')
 def search():
     if 'user_id' not in session:
@@ -158,6 +165,8 @@ def search():
     return render_template('search.html', tasksWithTitle=list(tasksWithTitle))
         
 
+=======
+>>>>>>> 63d45535dacdf56710a3080e82ab53ea86ffd9f1
 @app.route('/update_task_status', methods=['POST'])
 def update_task_status():
     task_id = request.form['task_id']

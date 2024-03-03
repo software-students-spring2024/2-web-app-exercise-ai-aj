@@ -1,4 +1,3 @@
-<!-- HOME PAGE -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +23,7 @@
             </div>
             <h1>HOME</h1>
             <!-- Logout Link/Button-->
-            <a href="/logout" class ="logout-button">Logout</a>
+            <a href="/logout" class="logout-button">Logout</a>
         </header>
         <!-- MAIN -->
         <main>
@@ -33,12 +32,10 @@
             <div class="task-list">
                 {% for task in tasks %}
                 <div class="task">
-                    <form action="/complete_task/{{ task._id }}" method="post">
-                        <input type="checkbox" id="task{{ loop.index }}" name="completed" onchange="this.form.submit()" {{ 'checked' if task.completed }}>
-                        <label for="task{{ loop.index }}" class="task-label">{{ task.title }}</label>
-                        <label for="task{{ loop.index }}" class="description">{{ task.description }}</label>
-                        <label for="task{{ loop.index }}" class="priority">Priority: {{ task.priority }}</label>
-                    </form>
+                    <!-- Removed checkboxes for task completion on the home page -->
+                    <label for="task{{ loop.index }}" class="task-label">{{ task.title }}</label>
+                    <label for="task{{ loop.index }}" class="description">{{ task.description }}</label>
+                    <label for="task{{ loop.index }}" class="priority">Priority: {{ task.priority }}</label>
                 </div>
                 {% else %}
                 <p>No tasks found</p>
@@ -47,6 +44,8 @@
 
             <!-- BUTTONS -->
             <div class="buttonContainer">
+                <!-- Button to navigate to tasks page for more task management functionalities -->
+                <a href="/tasks" class="button">Manage Tasks</a>
                 <a href="/add_task" class="button">Add Task</a>
             </div>
         </main>
