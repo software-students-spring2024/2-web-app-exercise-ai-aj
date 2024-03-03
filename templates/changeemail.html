@@ -1,0 +1,33 @@
+<!-- Change Email -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Email</title>
+    <!-- Add any additional CSS or JavaScript you need here -->
+</head>
+<body>
+    <h1>Change Email</h1>
+    <!-- Display flash messages here -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
+    
+    <form action="/change_email" method="POST">
+        <div class="form-group">
+            <label for="old_email">Old Email:</label>
+            <input type="email" id="old_email" name="old_email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="new_email">New Email:</label>
+            <input type="email" id="new_email" name="new_email" required>
+        </div>
+        <button type="submit">Change Email</button>
+    </form>
+</body>
+</html>
