@@ -145,19 +145,6 @@ def summary():
 
     return render_template('summary.html', past_due_completed=list(past_due_completed), past_due_incomplete=list(past_due_incomplete))
 
-@app.route('/search')
-def search(searchTitle):
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-    
-    if request.method == 'GET':
-        render_template('search.html')
-    elif request.method =='POST':
-        tasksWithTitle = tasks.find({"title": request.form('searchTitle'), "user_id": ObjectId(session['user_id'])})
-
-    return render_template('search.html', tasksWithTitle=list(tasksWithTitle))
-        
-
 @app.route('/update_task_status', methods=['POST'])
 def update_task_status():
     task_id = request.form['task_id']

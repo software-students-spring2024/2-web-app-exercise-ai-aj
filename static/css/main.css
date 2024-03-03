@@ -1,22 +1,48 @@
+@font-face {
+    font-family: 'typewriter';
+    src: url('fonts/typewriter.ttf') format('truetype');
+}
+
+.header{
+    border-radius: 20px;
+}
+.container{
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h2{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: typewriter;
+    text-align: center;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    font-family: typewriter;
 }
 
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 300px;
+    /* max-width: 300px; */
     width: 100%;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #CCDDE2;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     background-color: #fff;
+    font-family: typewriter;
 }
 
 input, button {
@@ -24,18 +50,20 @@ input, button {
     box-sizing: border-box;
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #CCDDE2;
     border-radius: 4px;
+    font-family: typewriter;
 }
 
 button {
-    background-color: #3498db;
+    background-color: #476DAB;
     color: #fff;
     cursor: pointer;
+    font-family: typewriter;
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #CCDDE2;
 }
 
 .addLinks {

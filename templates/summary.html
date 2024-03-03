@@ -1,29 +1,56 @@
-<!-- Task Summary-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Task Summary</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
-    <h1>Task Summary</h1>
-    <h2>Past Due Completed Tasks</h2>
-    <ul>
-        {% for task in past_due_completed %}
-        <li>{{ task.title }} - Due: {{ task.deadline.strftime('%Y-%m-%d') }}</li>
-        {% else %}
-        <p>No completed tasks are past due.</p>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <header>
+            <div class="hamburger-menu">
+                <div class="menu-icon" onclick="toggleMenu()">
+                    &#9776;
+                </div>
+                <div class="menu-content" id="menuContent" style="display: none;">
+                    <a href="/">Home</a>
+                    <a href="/tasks">Tasks</a>
+                    <a href="/summary">Summary</a>
+                    <a href="/account">Account</a>
+                    <a href="/search">Search</a>
+                </div>
+            </div>
+            <h2>TASK SUMMARY</h2>
+        </header>
 
-    <h2>Past Due Incomplete Tasks</h2>
-    <ul>
-        {% for task in past_due_incomplete %}
-        <li>{{ task.title }} - Due: {{ task.deadline.strftime('%Y-%m-%d') }}</li>
-        {% else %}
-        <p>No incomplete tasks are past due.</p>
-        {% endfor %}
-    </ul>
-    <a href="/">Back to Home</a>
+        <h2>Past Due Completed Tasks</h2>
+        <ul>
+            {% for task in past_due_completed %}
+            <li>{{ task.title }} - Due: {{ task.deadline.strftime('%Y-%m-%d') }}</li>
+            {% else %}
+            <p>No completed tasks are past due.</p>
+            {% endfor %}
+        </ul>
+
+        <h2>Past Due Incomplete Tasks</h2>
+        <ul>
+            {% for task in past_due_incomplete %}
+            <li>{{ task.title }} - Due: {{ task.deadline.strftime('%Y-%m-%d') }}</li>
+            {% else %}
+            <p>No incomplete tasks are past due.</p>
+            {% endfor %}
+        </ul>
+        <a href="/">Back to Home</a>
+    </div>
+    <script>
+        function toggleMenu() {
+            var menuContent = document.getElementById("menuContent");
+            if (menuContent.style.display === "none") {
+                menuContent.style.display = "block";
+            } else {
+                menuContent.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
