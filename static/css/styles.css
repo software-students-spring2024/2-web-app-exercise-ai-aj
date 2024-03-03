@@ -99,7 +99,7 @@ main {
     text-decoration: none;
     border-radius: 5px;
     display: inline-block;
-    margin-top: 20px; /* You can adjust this as needed for spacing */
+    margin-top: 20px;
 }
 
 .button:hover {
@@ -226,6 +226,27 @@ main {
 .backHomeButton:hover {
     background-color: #567DAB;
 }
+
+.completeTaskButton {
+    display: block;
+    width: auto;
+    margin: 0 auto;
+    background-color: #476DAB;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'typewriter', monospace;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.completeTaskButton:hover {
+    background-color: #567DAB;
+}
+
 
 /* Responsive styles */
 @media (max-width: 600px) {

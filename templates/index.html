@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/styles.css">
     <title>Task Tracker App</title>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -30,15 +32,29 @@
             <!-- Display tasks -->
             <h3>This Week's Tasks</h3>
             <div class="taskTable">
-                {% for task in tasks %}
                 <div class="taskRow">
+                    <div class="taskCell headerCell">Task</div>
+                    <div class="taskCell headerCell">Description</div>
+                    <div class="taskCell headerCell">Priority</div>
+                    <div class="taskCell headerCell">Deadline</div>
+                    <div class="taskCell headerCell">Completed ?</div>
+                </div>
+                <!-- Task List -->
+                {% for task in tasks %}
+                <form action="/complete_task/{{ task._id }}" method="POST" class="taskRow">
                     <div class="taskCell">{{ task.title }}</div>
                     <div class="taskCell">{{ task.description }}</div>
-                    <div class="taskCell">Priority: {{ task.priority }}</div>
+                    <div class="taskCell">{{ task.priority }}</div>
                     <div class="taskCell">{{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'N/A' }}</div>
-                </div>
+                    <div class="taskCell">
+                        <!-- Complete Task Button -->
+                        <button type="submit" class="completeTaskButton">Complete</button>
+                    </div>
+                </form>
                 {% else %}
-                <p>No tasks found</p>
+                <div class="taskRow">
+                    <p>No tasks found</p>
+                </div>
                 {% endfor %}
             </div>
 
@@ -54,15 +70,16 @@
         </footer>
     </div>
     <script>
-    function toggleMenu() {
-        var menuContent = document.getElementById("menuContent");
-        if (menuContent.style.display === "none") {
-            menuContent.style.display = "block";
+        function toggleMenu() {
+            var menuContent = document.getElementById("menuContent");
+            if (menuContent.style.display === "none") {
+                menuContent.style.display = "block";
+            }
+            else {
+                menuContent.style.display = "none";
+            }
         }
-        else {
-             menuContent.style.display = "none";
-        }
-    }
     </script>
 </body>
+
 </html>
