@@ -29,47 +29,47 @@
             <h2>Search for Task</h2>
             <form action="/search" method="post"> 
                 <input type="text" name="searchTitle" placeholder="Search by Task Title" required><br>
-<<<<<<< HEAD
                     <button type="submit">Search Task</button>
-=======
-                <button type="submit">Search Task</button>
->>>>>>> 63d45535dacdf56710a3080e82ab53ea86ffd9f1
             </form>
         </div>
 
 
         <!-- Column Headers-->
-        <div style="display: table; width: 100%;">
-            <div style="display: table-row; font-weight: bold;">
-                <div style="display: table-cell; padding: 8px;">Task</div>
-                <div style="display: table-cell; padding: 8px;">Description</div>
-                <div style="display: table-cell; padding: 8px;">Priority</div>
-                <div style="display: table-cell; padding: 8px;">Completed</div>
+        <div class="taskTableHeader">
+            <div class="taskRow">
+                <div class="taskCell headerCell">Select</div>
+                <div class="taskCell headerCell">Task</div>
+                <div class="taskCell headerCell">Description</div>
+                <div class="taskCell headerCell">Priority</div>
+                <div class="taskCell headerCell">Deadline</div>
+                <div class="taskCell headerCell">Completed</div>
+                <div class="taskCell headerCell">Edit</div>
             </div>
         </div>
 
         <!-- Task Search Result -->
         <div class="taskTable">
-            <div style="display: table; width: 100%;">
-                {% for task in tasksWithTitle %}
-                <div style="display: table-row;">
-                    <div style="display: table-cell; padding: 8px;">
-                        <label for="task{{ loop.index }}">{{ task.title }}</label>
-                    </div>
-                    <div style="display: table-cell; padding: 8px;">{{ task.description }}</div>
-                    <div style="display: table-cell; padding: 8px;">Priority: {{ task.priority }}</div>
-                    <div style="display: table-cell; padding: 8px;">
-                        <!-- Form to toggle completion status -->
-                        <form action="/complete_task/{{ task._id }}" method="post" style="display: inline;">
-                            <input type="checkbox" name="completed" onchange="this.form.submit()" {{ 'checked' if task.completed }}>
-                        </form>
-                    </div>
+            {% for task in tasksWithTitle %}
+            <div class="taskRow">
+                <div class="taskCell">
+                    <input type="checkbox" name="task_ids" value="{{ task._id }}">
                 </div>
-                {% else %}
-                <p>No tasks found.</p>
-                {% endfor %}
+                <div class="taskCell">{{ task.title }}</div>
+                <div class="taskCell">{{ task.description }}</div>
+                <div class="taskCell">{{ task.priority }}</div>
+                <div class="taskCell">{{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'N/A' }}</div>
+                <div class="taskCell">
+                    <input type="checkbox" onclick="return false;" {{ 'checked' if task.completed }}>
+                </div>
+                <div class="taskCell">
+                    <a href="/edit_task/{{ task._id }}">Edit</a>
+                </div>
             </div>
-        </div>
+            {% else %}
+            <div class="taskRow">
+                <div class="taskCell" colspan="7">No tasks found.</div>
+            </div>
+            {% endfor %}
     </div>
     <script>
     function toggleMenu() {
