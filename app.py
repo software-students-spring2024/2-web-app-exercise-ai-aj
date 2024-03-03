@@ -204,6 +204,22 @@ def change_email():
     else:
         flash('Invalid credentials.')
         return redirect(url_for('change_email_page'))
+    
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    tasksWithTitle = [] 
+
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'GET':
+        return render_template('search.html')
+    elif request.method == 'POST':
+        search_title = request.form['searchTitle']
+        user_id = ObjectId(session['user_id'])
+        tasksWithTitle = tasks.find({"title": {'$regex': search_title, '$options': 'i'}, "user_id": user_id})
+    return render_template('search.html', tasksWithTitle=list(tasksWithTitle))
 
     
 
