@@ -1,18 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
 @font-face {
     font-family: 'typewriter';
     src: url('fonts/typewriter.ttf') format('truetype');
 }
 
-
 body, h1, h2, h3, p, ul, li {
     margin: 0;
     padding: 0;
-}
-
-body {
     font-family: typewriter;
-    line-height: 1.6;
-    /* background-color: #f4f4f4; */
 }
 
 .container {
@@ -22,7 +20,6 @@ body {
 }
 
 header {
-    font-family: typewriter;
     background-color: #476DAB;
     color: #fff;
     padding: 10px;
@@ -169,6 +166,54 @@ main {
     }
 }
 
-.taskTable{
-    border: solid 1px #CCDDE2
+.taskTableHeader, .taskTable {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.taskRow {
+    display: table-row;
+}
+
+.taskCell {
+    display: table-cell;
+    padding: 8px;
+    border: solid 1px #CCDDE2;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.headerCell {
+    font-weight: bold;
+    background-color: #F3F4F6;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.deleteSelectedButton {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #CC0000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: typewriter;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .taskCell, .headerCell {
+        padding: 4px;
+    }
+}
+
+/* Additional styles to handle overflow and wrapping in table cells */
+.taskCell {
+    word-wrap: break-word; /* Allows long words to be broken and wrap onto the next line */
+    max-width: 200px; /* Sets a maximum width for each cell */
 }

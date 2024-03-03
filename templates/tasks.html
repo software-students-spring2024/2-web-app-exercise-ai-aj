@@ -23,39 +23,52 @@
             </div>
             <h2>TASKS</h2>
         </header>
-        <!-- Column Headers-->
-        <div style="display: table; width: 100%;">
-            <div style="display: table-row; font-weight: bold;">
-                <div style="display: table-cell; padding: 8px;">Task</div>
-                <div style="display: table-cell; padding: 8px;">Description</div>
-                <div style="display: table-cell; padding: 8px;">Priority</div>
-                <div style="display: table-cell; padding: 8px;">Completed</div>
-            </div>
-        </div>
 
-        <!-- Task List -->
-        <div class="taskTable">
-            <div style="display: table; width: 100%;">
-                {% for task in tasks %}
-                <div style="display: table-row;">
-                    <div style="display: table-cell; padding: 8px;">
-                        <label for="task{{ loop.index }}">{{ task.title }}</label>
-                    </div>
-                    <div style="display: table-cell; padding: 8px;">{{ task.description }}</div>
-                    <div style="display: table-cell; padding: 8px;">Priority: {{ task.priority }}</div>
-                    <div style="display: table-cell; padding: 8px;">
-                        <!-- Form to toggle completion status -->
-                        <form action="/complete_task/{{ task._id }}" method="post" style="display: inline;">
-                            <input type="checkbox" name="completed" onchange="this.form.submit()" {{ 'checked' if task.completed }}>
-                        </form>
-                    </div>
-                </div>
-                {% else %}
-                <p>No tasks found.</p>
-                {% endfor %}
-            </div>
+<!-- Form for deleting multiple tasks -->
+<form action="/delete_tasks" method="POST">
+   <!-- Task Table with Headers -->
+<div class="taskTableHeader">
+    <div class="taskRow">
+        <div class="taskCell headerCell">Select</div>
+        <div class="taskCell headerCell">Task</div>
+        <div class="taskCell headerCell">Description</div>
+        <div class="taskCell headerCell">Priority</div>
+        <div class="taskCell headerCell">Deadline</div>
+        <div class="taskCell headerCell">Completed</div>
+        <div class="taskCell headerCell">Edit</div>
+    </div>
+</div>
+
+<!-- Task List -->
+<div class="taskTable">
+    {% for task in tasks %}
+    <div class="taskRow">
+        <div class="taskCell">
+            <input type="checkbox" name="task_ids" value="{{ task._id }}">
+        </div>
+        <div class="taskCell">{{ task.title }}</div>
+        <div class="taskCell">{{ task.description }}</div>
+        <div class="taskCell">{{ task.priority }}</div>
+        <div class="taskCell">{{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'N/A' }}</div>
+        <div class="taskCell">
+            <input type="checkbox" onclick="return false;" {{ 'checked' if task.completed }}>
+        </div>
+        <div class="taskCell">
+            <a href="/edit_task/{{ task._id }}">Edit</a>
         </div>
     </div>
+    {% else %}
+    <div class="taskRow">
+        <div class="taskCell" colspan="7">No tasks found.</div>
+    </div>
+    {% endfor %}
+</div>
+
+<button type="submit" class="deleteSelectedButton">Delete Selected</button>
+
+</form>
+    </div>
+
     <script>
     function toggleMenu() {
         var menuContent = document.getElementById("menuContent");

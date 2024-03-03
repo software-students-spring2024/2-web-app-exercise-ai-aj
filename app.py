@@ -104,11 +104,17 @@ def edit_task(task_id):
         flash('Task updated successfully')
         return redirect(url_for('index'))
 
-@app.route('/delete_task/<task_id>', methods=['POST'])
-def delete_task(task_id):
-    tasks.delete_one({"_id": ObjectId(task_id)})
-    flash('Task deleted successfully')
-    return redirect(url_for('index'))
+@app.route('/delete_tasks', methods=['POST'])
+def delete_tasks():
+    # Retrieve list of task IDs marked for deletion
+    task_ids = request.form.getlist('task_ids')
+    for task_id in task_ids:
+        # Convert string ID to ObjectId and delete the task
+        tasks.delete_one({"_id": ObjectId(task_id)})
+    flash(f'Tasks deleted successfully.')
+    # Redirect back to the tasks page
+    return redirect(url_for('view_tasks'))
+
 
 @app.route('/reset_password', methods=['POST', 'GET'])
 def reset_password():
