@@ -22,4 +22,5 @@ Our task planner empowers users to effortlessly manage tasks and deadlines, enha
 ## Task boards
 
 [Sprint 1 Task Board](https://github.com/orgs/software-students-spring2024/projects/25/views/1)
+
 [Sprint 2 Task Board](https://github.com/orgs/software-students-spring2024/projects/40)
