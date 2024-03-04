@@ -23,11 +23,6 @@
             </div>
             <h2>CHANGE EMAIL</h2>
         </header>
-
-        <!-- Display flash messages here -->
-        {% for message in get_flashed_messages() %}
-            <div class="alert">{{ message }}</div>
-        {% endfor %}
         
         <form action="/change_email" method="POST" class="form">
             <div class="form-group">
