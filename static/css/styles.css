@@ -2,6 +2,17 @@
     box-sizing: border-box;
 }
 
+button.completeTaskButton{
+    width: 60px;
+}
+
+.tDescription{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
 @font-face {
     font-family: 'typewriter';
     src: url('fonts/typewriter.ttf') format('truetype');
@@ -191,7 +202,12 @@ main {
     font-weight: bold;
     background-color: #F3F4F6;
     text-align: left;
+    font-size: 13px;
     vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    
 }
 
 .deleteSelectedButton {
@@ -259,4 +275,37 @@ main {
 .taskCell {
     word-wrap: break-word; /* Allows long words to be broken and wrap onto the next line */
     max-width: 200px; /* Sets a maximum width for each cell */
+}
+
+
+input, button {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #CCDDE2;
+    border-radius: 4px;
+    font-family: typewriter;
+}
+
+button {
+    background-color: #476DAB;
+    color: #fff;
+    cursor: pointer;
+    font-family: typewriter;
+}
+
+button:hover {
+    background-color: #CCDDE2;
+}
+
+.bAccount{
+    width: 80%;
+}
+
+.form{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 20px;
 }

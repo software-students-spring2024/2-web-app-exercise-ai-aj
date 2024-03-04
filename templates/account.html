@@ -1,35 +1,55 @@
-<!-- ACCOUNT PAGE-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/styles.css">
     <title>Account Settings</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <h1>Account Settings</h1>
+        <header>
+            <div class="hamburger-menu">
+                <div class="menu-icon" onclick="toggleMenu()">
+                    &#9776;
+                </div>
+                <div class="menu-content" id="menuContent" style="display: none;">
+                    <a href="/">Home</a>
+                    <a href="/tasks">Tasks</a>
+                    <a href="/summary">Summary</a>
+                    <a href="/account">Account</a>
+                    <a href="/search">Search</a>
+                </div>
+            </div>
+            <h2>ACCOUNT</h2>
         </header>
+
         <div class="form">
             <div class="user-info">
                 <p><strong>Username:</strong> {{ username }}</p>
                 <p><strong>Email:</strong> {{ email }}</p>
             </div>
             <div class="account-action">
-                <h2>Reset Password</h2>
-                <a href="{{ url_for('reset_password') }}" class="button">Reset Password?</a>
+                <a href="{{ url_for('reset_password') }}" class="button bAccount">Reset Password?</a>
             </div>
             <div class="account-action">
-                <h2>Change Email Address</h2>
-                <a href="/change_email" class="button">Change Email Address</a>
+                <a href="/change_email" class="button bAccount">Change Email Address</a>
             </div>
             <div class="back-link addLinks">
-                <a href="/" class="button">Back to Home</a>
+                <a href="/" class="button bAccount">Back to Home</a>
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleMenu() {
+            var menuContent = document.getElementById("menuContent");
+            if (menuContent.style.display === "none") {
+                menuContent.style.display = "block";
+            } else {
+                menuContent.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
