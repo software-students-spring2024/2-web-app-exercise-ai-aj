@@ -34,21 +34,21 @@
             <div class="taskTable">
                 <div class="taskRow">
                     <div class="taskCell headerCell">Task</div>
-                    <div class="taskCell headerCell">Description</div>
+                    <div class="taskCell headerCell">Desc .</div>
                     <div class="taskCell headerCell">Priority</div>
                     <div class="taskCell headerCell">Deadline</div>
-                    <div class="taskCell headerCell">Completed ?</div>
+                    <div class="taskCell headerCell">Done ?</div>
                 </div>
                 <!-- Task List -->
                 {% for task in tasks %}
                 <form action="/complete_task/{{ task._id }}" method="POST" class="taskRow">
                     <div class="taskCell">{{ task.title }}</div>
-                    <div class="taskCell">{{ task.description }}</div>
+                    <div class="taskCell tDescription">{{ task.description }}</div>
                     <div class="taskCell">{{ task.priority }}</div>
                     <div class="taskCell">{{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'N/A' }}</div>
                     <div class="taskCell">
                         <!-- Complete Task Button -->
-                        <button type="submit" class="completeTaskButton">Complete</button>
+                        <button type="submit" class="completeTaskButton">Done</button>
                     </div>
                 </form>
                 {% else %}

@@ -32,10 +32,10 @@
                 <div class="taskRow">
                     <div class="taskCell headerCell">Select</div>
                     <div class="taskCell headerCell">Task</div>
-                    <div class="taskCell headerCell">Description</div>
+                    <div class="taskCell headerCell">Desc .</div>
                     <div class="taskCell headerCell">Priority</div>
                     <div class="taskCell headerCell">Deadline</div>
-                    <div class="taskCell headerCell">Completed</div>
+                    <div class="taskCell headerCell">Done ?</div>
                     <div class="taskCell headerCell">Edit</div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                         <input type="checkbox" name="task_ids" value="{{ task._id }}">
                     </div>
                     <div class="taskCell">{{ task.title }}</div>
-                    <div class="taskCell">{{ task.description }}</div>
+                    <div class="taskCell tDescription">{{ task.description }}</div>
                     <div class="taskCell">{{ task.priority }}</div>
                     <div class="taskCell">{{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'N/A' }}</div>
                     <div class="taskCell">

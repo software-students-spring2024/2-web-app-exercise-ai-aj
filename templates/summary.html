@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Task Summary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/styles.css">
+    <title>Task Summary</title>
 </head>
 <body>
     <div class="container">
@@ -23,25 +24,57 @@
             <h2>TASK SUMMARY</h2>
         </header>
 
-        <h2>Past Due Completed Tasks</h2>
-        <ul>
-            {% for task in past_due_completed %}
-            <li>{{ task.title }} - Due: {{ task.deadline.strftime('%Y-%m-%d') }}</li>
-            {% else %}
-            <p>No completed tasks are past due.</p>
-            {% endfor %}
-        </ul>
+        <div class="summary-list">
+            <h2>Past Due Completed Tasks</h2>
+            <table class="taskTable">
+                <thead>
+                    <tr class="taskRow">
+                        <th class="taskCell headerCell">Task</th>
+                        <th class="taskCell headerCell">Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in past_due_completed %}
+                    <tr class="taskRow">
+                        <td class="taskCell">{{ task.title }}</td>
+                        <td class="taskCell">{{ task.deadline.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                    {% else %}
+                    <tr class="taskRow">
+                        <td class="taskCell" colspan="2">No completed tasks are past due.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-        <h2>Past Due Incomplete Tasks</h2>
-        <ul>
-            {% for task in past_due_incomplete %}
-            <li>{{ task.title }} - Due: {{ task.deadline.strftime('%Y-%m-%d') }}</li>
-            {% else %}
-            <p>No incomplete tasks are past due.</p>
-            {% endfor %}
-        </ul>
-        <a href="/">Back to Home</a>
+            <h2>Past Due Incomplete Tasks</h2>
+            <table class="taskTable">
+                <thead>
+                    <tr class="taskRow">
+                        <th class="taskCell headerCell">Task</th>
+                        <th class="taskCell headerCell">Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in past_due_incomplete %}
+                    <tr class="taskRow">
+                        <td class="taskCell">{{ task.title }}</td>
+                        <td class="taskCell">{{ task.deadline.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                    {% else %}
+                    <tr class="taskRow">
+                        <td class="taskCell" colspan="2">No incomplete tasks are past due.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="buttonContainer">
+            <a href="/" class="backHomeButton">Back to Home</a>
+        </div>
     </div>
+
     <script>
         function toggleMenu() {
             var menuContent = document.getElementById("menuContent");
