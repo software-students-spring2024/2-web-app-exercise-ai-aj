@@ -41,16 +41,18 @@
                 </div>
                 <!-- Task List -->
                 {% for task in tasks %}
-                <form action="/complete_task/{{ task._id }}" method="POST" class="taskRow">
+                <div class="taskRow">
                     <div class="taskCell">{{ task.title }}</div>
                     <div class="taskCell tDescription">{{ task.description }}</div>
                     <div class="taskCell">{{ task.priority }}</div>
                     <div class="taskCell">{{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'N/A' }}</div>
                     <div class="taskCell">
-                        <!-- Complete Task Button -->
-                        <button type="submit" class="completeTaskButton">Done</button>
+                        <!-- AJAX complete task button -->
+                        <button type="button" class="completeTaskButton" onclick="completeTask('{{ task._id }}')">
+                            Done
+                        </button>
                     </div>
-                </form>
+                </div>
                 {% else %}
                 <div class="taskRow">
                     <p>No tasks found</p>
@@ -60,7 +62,6 @@
 
             <!-- BUTTONS -->
             <div class="buttonContainer">
-                <!-- Button to navigate to tasks page for more task management functionalities -->
                 <a href="/tasks" class="button">Manage Tasks</a>
                 <a href="/add_task" class="button">Add Task</a>
             </div>
@@ -70,12 +71,37 @@
         </footer>
     </div>
     <script>
+        function completeTask(taskId) {
+            // AJAX request for a completed task
+            fetch(`/complete_task/${taskId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ task_id: taskId }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // successful done
+                console.log('Task completed successfully:', data);
+                // reload for changes
+                location.reload(); 
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
         function toggleMenu() {
             var menuContent = document.getElementById("menuContent");
             if (menuContent.style.display === "none") {
                 menuContent.style.display = "block";
-            }
-            else {
+            } else {
                 menuContent.style.display = "none";
             }
         }
