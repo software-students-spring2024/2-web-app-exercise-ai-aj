@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, jsonify, request, redirect, url_for, flash, session
 from flask_bcrypt import Bcrypt
 import pymongo
 from bson.objectid import ObjectId
@@ -81,7 +81,9 @@ def complete_task(task_id):
     task = tasks.find_one({"_id": ObjectId(task_id)})
     new_status = not task.get('completed', False)
     tasks.update_one({"_id": ObjectId(task_id)}, {"$set": {"completed": new_status}})
-    return redirect(request.referrer or url_for('index'))
+    
+    # Return a JSON response indicating success
+    return jsonify({"status": "success", "completed": new_status})
 
 
 @app.route('/edit_task/<task_id>', methods=['GET', 'POST'])
