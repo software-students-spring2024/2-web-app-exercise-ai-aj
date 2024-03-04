@@ -48,7 +48,7 @@
                     <div class="taskCell">{{ task.deadline.strftime('%Y-%m-%d') if task.deadline else 'N/A' }}</div>
                     <div class="taskCell">
                         <!-- AJAX complete task button -->
-                        <button type="button" class="completeTaskButton" onclick="completeTask('{{ task._id }}')">
+                        <button id="completeButton_{{ task._id }}" type="button" class="completeTaskButton" onclick="completeTask('{{ task._id }}')">
                             Done
                         </button>
                     </div>

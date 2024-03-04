@@ -134,6 +134,24 @@ def reset_password():
             flash('Password reset failed')
         return redirect(url_for('index'))
     
+@app.route('/forgotpassword', methods=['POST', 'GET'])
+def forgot_password():
+    if request.method == 'GET':
+        return render_template('forgotpassword.html')
+    elif request.method == 'POST':
+        user = users.find_one({'email': request.form['email']})
+
+        if user:
+            reset_token = 'your_unique_token'
+
+            print(f"Password reset link: {url_for('reset_password', token=reset_token, _external=True)}")
+
+            flash('Password reset instructions sent to your email')
+            return redirect(url_for('index'))
+        else:
+            flash('User not found')
+            return redirect(url_for('forgot_password'))
+    
 @app.route('/tasks')
 def view_tasks():
     if 'user_id' not in session:
