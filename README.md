@@ -21,5 +21,15 @@ Our task planner empowers users to effortlessly manage tasks and deadlines, enha
 
 ## Task boards
 
+## How to Run The app
+
+1. Clone the project repository to your local machine using Git: ``` git clone https://github.com/software-students-spring2024/2-web-app-exercise-ai-aj.git ```
+2. cd 2-web-app-exercise-ai-aj and activate a virtual environment
+3. pip install -r requirements.txt (install dependencies
+4. Create a .env file that has been provided to you in the project channel
+5. flask run
+
+
+
 [Sprint 1 Task Board](https://github.com/orgs/software-students-spring2024/projects/25/views/1)  
 [Sprint 2 Task Board](https://github.com/orgs/software-students-spring2024/projects/40)
