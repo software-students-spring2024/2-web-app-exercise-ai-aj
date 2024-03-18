@@ -19,9 +19,8 @@ Our task planner empowers users to effortlessly manage tasks and deadlines, enha
 - As a user, I want to be able to edit the tasks, so I can modify them as needed.
 - As a user, I want the ability to see tasks that are past due, so I can know whether I failed to complete a task.
 
-## Task boards
-
 ## How to Run The app
+note: make sure youhave mongodb running locally
 
 1. Clone the project repository to your local machine using Git: ``` git clone https://github.com/software-students-spring2024/2-web-app-exercise-ai-aj.git ```
 2. cd 2-web-app-exercise-ai-aj and activate a virtual environment
@@ -29,7 +28,7 @@ Our task planner empowers users to effortlessly manage tasks and deadlines, enha
 4. Create a .env file that has been provided to you in the project channel
 5. flask run
 
-
+## Task boards
 
 [Sprint 1 Task Board](https://github.com/orgs/software-students-spring2024/projects/25/views/1)  
 [Sprint 2 Task Board](https://github.com/orgs/software-students-spring2024/projects/40)
